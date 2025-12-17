@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Pegawai extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'budi_534908_pegawai';
 
     public function pegawai()
