@@ -11,6 +11,8 @@ class Pekerjaan extends Model
 
     protected $table = 'budi_534908_pekerjaan';
 
+    protected $fillable = ['nama', 'deskripsi'];
+
     public function pegawai()
     {
         return $this->hasMany(Pegawai::class);
