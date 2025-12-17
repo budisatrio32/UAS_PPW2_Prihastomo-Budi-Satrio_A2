@@ -3,7 +3,9 @@
 @section('menuberanda', 'underline decoration-4 underline-offset-7')
 @section('content')
     <section class="p-4 bg-white rounded-lg">
-        <h1 class="text-3xl font-bold text-[#C0392B] mb-6 text-center">Statistik</h1>
+        <h1 class="text-3xl font-bold text-[#C0392B] mb-6 text-center">Dashboard Statistik</h1>
+
+        <!-- Charts -->
         <div class="mx-auto">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
@@ -25,10 +27,10 @@
         new Chart(ctx1, {
             type: 'pie',
             data: {
-                labels: ["Male", "Female"],
+                labels: ["Laki-laki", "Perempuan"],
                 datasets: [{
                     label: 'Jumlah',
-                    data: [4644,4800],
+                    data: [{{ $maleCount }}, {{ $femaleCount }}],
                     backgroundColor: [
                         '#3b82f6',
                         '#ec4899'
@@ -55,15 +57,17 @@
             type: 'bar',
             data: {
                 labels: [
-                    "Software Engineer",
-                    "Data Analyst",
-                    "Project Manager",
-                    "System Administrator",
-                    "UI/UX Designer"
+                    @foreach($topPekerjaan as $index => $pekerjaan)
+                        "{{ $pekerjaan->nama }}"{{ $index < $topPekerjaan->count() - 1 ? ',' : '' }}
+                    @endforeach
                 ],
                 datasets: [{
                     label: 'Jumlah Pegawai',
-                    data: [110, 95, 85, 75, 70],
+                    data: [
+                        @foreach($topPekerjaan as $index => $pekerjaan)
+                            {{ $pekerjaan->pegawai_count }}{{ $index < $topPekerjaan->count() - 1 ? ',' : '' }}
+                        @endforeach
+                    ],
                     backgroundColor: '#C0392B',
                     borderColor: '#922B21',
                     borderWidth: 1,
@@ -83,6 +87,9 @@
                 scales: {
                     y: {
                         beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
                     },
                 }
             }

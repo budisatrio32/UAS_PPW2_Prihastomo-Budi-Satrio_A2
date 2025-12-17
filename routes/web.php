@@ -4,6 +4,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [App\Http\Controllers\MainController::class, 'index'])->name('index');
 
+Route::get('/captcha/reload', function () {
+    return response()->json(['captcha' => captcha_src('flat')]);
+})->name('captcha.reload');
+
 Route::prefix('/pekerjaan')->group(function () {
     Route::get('/', [App\Http\Controllers\PekerjaanController::class, 'index'])->name('pekerjaan.index');
     Route::get('/add', [App\Http\Controllers\PekerjaanController::class, 'add'])->name('pekerjaan.add');

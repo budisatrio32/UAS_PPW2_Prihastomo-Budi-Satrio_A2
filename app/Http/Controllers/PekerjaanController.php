@@ -28,9 +28,15 @@ class PekerjaanController extends Controller
         $validator = Validator::make($request->all(), [
             'nama' => 'required|string',
             'deskripsi' => 'required|string',
+            'captcha' => 'required|captcha',
+        ], [
+            'captcha.required' => 'Captcha harus diisi',
+            'captcha.captcha' => 'Captcha tidak valid',
         ]);
 
-        if ($validator->fails()) return redirect()->back()->with($validator->errors()->all());
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
         $data = new Pekerjaan();
         $data->nama = $request->nama;
@@ -52,9 +58,15 @@ class PekerjaanController extends Controller
         $validator = Validator::make($request->all(), [
             'nama' => 'required|string',
             'deskripsi' => 'required|string',
+            'captcha' => 'required|captcha',
+        ], [
+            'captcha.required' => 'Captcha harus diisi',
+            'captcha.captcha' => 'Captcha tidak valid',
         ]);
 
-        if ($validator->fails()) return redirect()->back()->with($validator->errors()->all());
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
         $data = Pekerjaan::findOrFail($request->id);
 
